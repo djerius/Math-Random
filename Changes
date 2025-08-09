@@ -61,3 +61,7 @@ Revision history for Perl extension Math::Random.
 	- The random seed was based on time of day and was a bit too
 	  predictable. Applying patch provided by Jonathan Yu:
 	  https://rt.cpan.org/Public/Bug/Display.html?id=48080
+
+0.73   Sat Aug 09 12:08:00 2025
+        - added basegen splitting routines, raw integer random number
+        - modernized test infrastructure
