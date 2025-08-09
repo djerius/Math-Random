@@ -53,28 +53,6 @@ $VERSION = '0.72';
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
-sub AUTOLOAD {
-    # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.  If a constant is not found then control is passed
-    # to the AUTOLOAD in AutoLoader.
-
-    my $constname;
-    ($constname = $AUTOLOAD) =~ s/.*:://;
-    croak "& not defined" if $constname eq 'constant';
-    my $val = constant($constname, @_ ? $_[0] : 0);
-    if ($! != 0) {
-	if ($! =~ /Invalid/) {
-	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
-	    goto &AutoLoader::AUTOLOAD;
-	}
-	else {
-		croak "Your vendor has not defined Math::Random macro $constname";
-	}
-    }
-    *$AUTOLOAD = sub () { $val };
-    goto &$AUTOLOAD;
-}
-
 bootstrap Math::Random $VERSION;
 
 

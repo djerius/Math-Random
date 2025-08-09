@@ -33,31 +33,6 @@ extern "C" {
 #define Perl_get_seed 0L
 #endif /* Perl_seed */
 
-static int
-not_here(s)
-char *s;
-{
-    croak("%s not implemented on this architecture", s);
-    return -1;
-}
-
-static double
-constant(name, arg)
-char *name;
-int arg;
-{
-    errno = 0;
-    switch (*name) {
-    }
-    errno = EINVAL;
-    return 0;
-
-not_there:
-    errno = ENOENT;
-    return 0;
-}
-
-
 MODULE = Math::Random		PACKAGE = Math::Random		
 
 long
