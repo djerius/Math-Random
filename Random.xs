@@ -44,135 +44,106 @@ get_seed()
 
 double
 genbet (aa,bb)
-	INPUT:
 	double  aa
 	double  bb
 
 double
 genchi (df)
-	INPUT:
 	double  df
 
 double
 genexp (av)
-	INPUT:
 	double  av
 
 double
 genf (dfn,dfd)
-	INPUT:
 	double  dfn
 	double  dfd
 
 double
 gengam (a,r)
-	INPUT:
 	double  a
 	double  r
 
 int
 psetmn (p)
-	INPUT:
 	long  p
 
 int
 pgenmn ()
 	PROTOTYPE:
-	INPUT:
-	CODE:
-	RETVAL = pgenmn();
-	OUTPUT:
-	RETVAL
 
 int
 rspriw (size)
-	INPUT:
 	long  size
 
 int
 rsprfw (size)
-	INPUT:
 	long  size
 
 void
 svprfw (index,value)
-	INPUT:
 	long  index
 	double  value
 
 void
 pgnmul (n,ncat)
-	INPUT:
 	long  n
 	long  ncat
 
 long
 gvpriw (index)
-	INPUT:
 	long  index
 
 double
 gennch (df,xnonc)
-	INPUT:
 	double  df
 	double  xnonc
 
 double
 gennf (dfn,dfd,xnonc)
-	INPUT:
 	double  dfn
 	double  dfd
 	double  xnonc
 
 double
 gennor (av,sd)
-	INPUT:
 	double  av
 	double  sd
 
 void
 pgnprm (n)
-	PROTOTYPE: $
-	INPUT:
 	long  n
-	CODE:
-	pgnprm(n);
-	OUTPUT:
+	PROTOTYPE: $
 
 double
 genunf (low,high)
-	INPUT:
 	double  low
 	double  high
 
 long
 ignpoi (mu)
-	INPUT:
 	double  mu
 
 long
 ignuin (low,high)
-	INPUT:
 	long  low
 	long  high
 
 long
 ignnbn (n,p)
-	INPUT:
 	long  n
 	double  p
 
 long
 ignbin (n,pp)
-	INPUT:
 	long  n
 	double  pp
 
 void
 phrtsd (phrase)
-	PROTOTYPE: $
-	INPUT:
 	char *  phrase
+	PROTOTYPE: $
 	PREINIT:
 	long  newseed1;
 	long  newseed2;
@@ -183,7 +154,7 @@ phrtsd (phrase)
 	PUSHs(sv_2mortal(newSViv(newseed2)));
 
 void
-getsd ()
+random_get_seed ()
 	PROTOTYPE:
 	PREINIT:
 	long  newseed1;
@@ -196,22 +167,15 @@ getsd ()
 
 void
 salfph (phrase)
-	PROTOTYPE: $
-	INPUT:
 	char *  phrase
-	CODE:
-	salfph(phrase);
-	OUTPUT:
+	PROTOTYPE: $
 
 void
 setall (iseed1,iseed2)
-	PROTOTYPE: $$
-	INPUT:
 	long  iseed1
 	long  iseed2
-	CODE:
-	setall(iseed1,iseed2);
-	OUTPUT:
+	PROTOTYPE: $$
+
 
 void
 random_advance_state (k)
@@ -268,6 +232,5 @@ random_integer ()
 
 double
 gvprfw (index)
-	INPUT:
 	long  index
 

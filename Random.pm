@@ -366,10 +366,6 @@ sub random_seed_from_phrase { # Argument $phrase
     return phrtsd($phrase);
 }
 
-sub random_get_seed { # no argument
-    return getsd();
-}
-
 sub random_set_seed_from_phrase { # Argument $phrase
     my $phrase = shift(@_);
     $phrase ||= "";
@@ -419,8 +415,6 @@ sub putflt {
     }
     return 1;
 }
-
-# Autoload methods go after =cut, and are processed by the autosplit program.
 
 1;
 
