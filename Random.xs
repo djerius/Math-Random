@@ -238,6 +238,59 @@ setall (iseed1,iseed2)
 	setall(iseed1,iseed2);
 	OUTPUT:
 
+void
+random_advance_state (k)
+    long  k
+    CODE:
+    if ( k < 0 )
+        croak("incorrect value for k; must be >=0");
+    advnst(k);
+
+void
+random_init_generator (isdtyp)
+    long  isdtyp
+    CODE:
+    if ( isdtyp != -1 && isdtyp != 0 && isdtyp != 1)
+        croak("incorrect value for isdtyp; must be -1, 0, or 1");
+    initgn(isdtyp);
+
+void
+random_set_antithetic (qvalue)
+    long  qvalue
+    CODE:
+    setant(qvalue);
+
+long
+random_get_generator_num ()
+    PREINIT:
+      long old_g;
+    CODE:
+      gscgn(0, &old_g);
+      RETVAL = old_g;
+    OUTPUT:
+      RETVAL
+
+long
+random_set_generator_num ( g)
+      long g
+    PREINIT:
+      long old_g;
+    CODE:
+      if ( g < 1 || g > 32 )
+        croak("incorrect value for 'g'; must be 1 <= g <= 32");
+      gscgn(0, &old_g);
+      RETVAL = old_g;
+      gscgn(1, &g);
+    OUTPUT:
+      RETVAL
+
+long
+random_integer ()
+    CODE:
+      RETVAL = ignlgi();
+    OUTPUT:
+      RETVAL
+
 double
 gvprfw (index)
 	INPUT:

@@ -43,6 +43,12 @@ $VERSION = '0.72';
                 random_get_seed
                 random_set_seed_from_phrase
                 random_set_seed
+                random_integer
+                random_init_generator
+                random_set_antithetic
+                random_advance_state
+                random_get_generator_num
+                random_set_generator_num
 		);
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
@@ -371,6 +377,7 @@ sub random_binomial { # Arguments: ($n,$nt,$p)
     return @ans;
 }
 
+
 #####################################################################
 #			SEED HANDLER FUNCTIONS                      #
 #####################################################################
@@ -577,6 +584,10 @@ Usually, the  argument  I<@seed> should be  the result  of  a  call to
 C<random_get_seed>  or C<random_seed_from_phrase>.  I<@seed>[0,1] must
 be two integers in the range S<(1, 1)> to S<(2147483562, 2147483398)>,
 inclusive.
+
+=item C<random_integer()>
+
+Returns a raw random long integer.
 
 =item C<random_uniform($n, $low, $high)>
 
@@ -848,6 +859,53 @@ outcome as a scalar, regardless of the value of I<$n>.
 Argument restrictions: I<$mu> must be non-negative.
 
 There are no defaults; both arguments must be provided.
+
+=back
+
+=head2 Base Generator Routines
+
+These routines control the underlying base random number generator.
+
+=over
+
+=item C<random_init_generator($type)>
+
+Sets the seeds of the current random number generator based on C<$type>:
+
+=over
+
+=item  -1
+
+initial value
+
+=item   0
+
+first value of the current block
+
+=item   1
+
+first value of the next block
+
+=back
+
+
+=item C<random_set_antithetic($bool)>
+
+Sets whether to return antithetic random numbers.
+A non-zero value enables antithetic mode.
+
+=item C<random_advance_state($k)>
+
+Advances the state of the current generator by C<2**$k> values and
+resets the initial seed to that value.
+
+=item C<random_get_generator_num()>
+
+Returns the number of the current random number generator.
+
+=item C<random_set_generator_num($g)>
+
+Sets the current random number generator to C<$g>.
 
 =back
 
