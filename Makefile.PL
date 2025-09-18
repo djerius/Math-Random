@@ -9,13 +9,31 @@ $def = '-DPHRTSD_ORIG'
   if $OPT =~ /phrtsd_orig/i;
 
 WriteMakefile(
-    'NAME'         => 'Math::Random',
-    'VERSION_FROM' => 'Random.pm',
-    'OBJECT'       => '$(O_FILES)',
-    'LIBS'         => ['-lm'],
-    'DEFINE'       => $def,
-    'TEST_REQUIRES' => {
+    NAME         => 'Math::Random',
+    VERSION      => '0.73-TRIAL',
+    XS_VERSION   => '0.73',
+    # VERSION_FROM => 'Random.pm',
+    OBJECT       => '$(O_FILES)',
+    LIBS         => ['-lm'],
+    DEFINE       => $def,
+    MIN_PERL_VERSION => '5.10.0',
+    TEST_REQUIRES => {
         'Test2::V0' => 0,
     },
+
+    META_ADD => {
+        resources => {
+            repository => {
+                type => 'git',
+                url  => 'https://github.com/djerius/Math-Random.git',
+                web  => 'https://github.com/djerius/Math-Random',
+            },
+            bugtracker => {
+                mailto => 'bug-math-random@rt.cpan.org',
+                web    => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Math-Random',
+            },
+        },
+    },
+
 );
 

@@ -13,75 +13,75 @@ our $VERSION = '0.73';
 ## no critic ( Wantarray DollarAB ComplexMappings )
 
 our @EXPORT = qw(random_normal
-             random_permutation
-             random_permuted_index
-             random_uniform
-             random_uniform_integer
-             random_seed_from_phrase
-             random_get_seed
-             random_set_seed_from_phrase
-             random_set_seed
-             );
+  random_permutation
+  random_permuted_index
+  random_uniform
+  random_uniform_integer
+  random_seed_from_phrase
+  random_get_seed
+  random_set_seed_from_phrase
+  random_set_seed
+);
 
 our @EXPORT_OK = qw(random_beta
-                random_chi_square
-                random_exponential
-                random_f
-                random_gamma
-                random_multivariate_normal
-                random_multinomial
-                random_noncentral_chi_square
-                random_noncentral_f
-                random_normal
-                random_permutation
-                random_permuted_index
-                random_uniform
-                random_poisson
-                random_uniform_integer
-                random_negative_binomial
-                random_binomial
-                random_seed_from_phrase
-                random_get_seed
-                random_set_seed_from_phrase
-                random_set_seed
-                random_integer
-                random_init_generator
-                random_set_antithetic
-                random_advance_state
-                random_get_generator_num
-                random_set_generator_num
-                );
+  random_chi_square
+  random_exponential
+  random_f
+  random_gamma
+  random_multivariate_normal
+  random_multinomial
+  random_noncentral_chi_square
+  random_noncentral_f
+  random_normal
+  random_permutation
+  random_permuted_index
+  random_uniform
+  random_poisson
+  random_uniform_integer
+  random_negative_binomial
+  random_binomial
+  random_seed_from_phrase
+  random_get_seed
+  random_set_seed_from_phrase
+  random_set_seed
+  random_integer
+  random_init_generator
+  random_set_antithetic
+  random_advance_state
+  random_get_generator_num
+  random_set_generator_num
+);
 
-our %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
+our %EXPORT_TAGS = ( all => [@EXPORT_OK] );
 
 bootstrap Math::Random $VERSION;
 
 
 ### set seeds by default
-salfph(get_seed() || scalar(localtime));
+salfph( get_seed() || scalar( localtime ) );
 
 #####################################################################
 #		      RANDOM DEVIATE GENERATORS                     #
 #####################################################################
 
-sub random_beta { # Arguments: ($n,$aa,$bb)
+sub random_beta {    # Arguments: ($n,$aa,$bb)
 
     croak 'Usage: random_beta($n,$aa,$bb)' if @_ < 3;
 
-    my($n, $aa, $bb) = @_;
-    croak("random_beta: ($aa = \$aa < 1.0E-37) or ($bb = \$bb < 1.0E-37)")
-        if ($aa < 1.0E-37) || ($bb < 1.0E-37);
+    my ( $n, $aa, $bb ) = @_;
+    croak( "random_beta: ($aa = \$aa < 1.0E-37) or ($bb = \$bb < 1.0E-37)" )
+      if ( $aa < 1.0E-37 ) || ( $bb < 1.0E-37 );
 
     return wantarray
       ? map { genbet( $aa, $bb ) } 1 .. $n
       : genbet( $aa, $bb );
 }
 
-sub random_chi_square { # Arguments: ($n,$df)
+sub random_chi_square {    # Arguments: ($n,$df)
     croak 'Usage: random_chi_square(\$n,\$df)'
       if @_ < 2;
 
-    my($n, $df) = @_;
+    my ( $n, $df ) = @_;
     croak "random_chi_square: $df = \$df <= 0"
       if $df <= 0;
 
@@ -90,12 +90,12 @@ sub random_chi_square { # Arguments: ($n,$df)
       : genchi( $df );
 }
 
-sub random_exponential { # Arguments: ($n,$av), defaults (1,1)
-    return wantarray() ? (genexp(1)) : genexp(1)
-        if @_ == 0; # default behavior if no arguments
+sub random_exponential {    # Arguments: ($n,$av), defaults (1,1)
+    return wantarray() ? ( genexp( 1 ) ) : genexp( 1 )
+      if @_ == 0;           # default behavior if no arguments
 
-    my($n, $av) = @_;
-    $av //= 1; # default $av is 1
+    my ( $n, $av ) = @_;
+    $av //= 1;              # default $av is 1
     croak "random_exponential: $av = \$av < 0"
       if $av < 0;
 
@@ -104,65 +104,66 @@ sub random_exponential { # Arguments: ($n,$av), defaults (1,1)
       : genexp( $av );
 }
 
-sub random_f { # Arguments: ($n,$dfn,$dfd)
+sub random_f {    # Arguments: ($n,$dfn,$dfd)
     croak 'Usage: random_f($n,$dfn,$dfd)' if @_ < 3;
-    my($n, $dfn, $dfd) = @_;
-    croak("random_f: ($dfn = \$dfn <= 0) or ($dfd = \$dfd <= 0")
-      if ($dfn <= 0) || ($dfd <= 0);
+    my ( $n, $dfn, $dfd ) = @_;
+    croak( "random_f: ($dfn = \$dfn <= 0) or ($dfd = \$dfd <= 0" )
+      if ( $dfn <= 0 ) || ( $dfd <= 0 );
 
     return wantarray
       ? map { genf( $dfn, $dfd ) } 1 .. $n
       : genf( $dfn, $dfd );
 }
 
-sub random_gamma { # Arguments: ($n,$a,$r)
+sub random_gamma {    # Arguments: ($n,$a,$r)
     croak 'Usage: random_gamma($n,$a,$r)' if @_ < 3;
-    my($n, $a, $r) = @_;
+    my ( $n, $a, $r ) = @_;
     croak "random_gamma: ($a = \$a <= 0) or ($r = \$r <= 0)"
-      if ($a <= 0) || ($r <= 0);
+      if ( $a <= 0 ) || ( $r <= 0 );
 
     return wantarray
       ? map { gengam( $a, $r ) } 1 .. $n
       : gengam( $a, $r );
 }
 
-sub random_multivariate_normal { # Arguments: ($n, @mean, @covar(2-dimensional))
+sub random_multivariate_normal {    # Arguments: ($n, @mean, @covar(2-dimensional))
 
     croak 'Usage: random_multivariate_normal($n,@mean,@covar(2-dimensional))'
-        if @_ < 3;
-    my $n = shift(@_); # first element is number of obs. desired
-    my $p = @_/2; # best guess at dimension of deviate
+      if @_ < 3;
+    my $n = shift( @_ );            # first element is number of obs. desired
+    my $p = @_ / 2;                 # best guess at dimension of deviate
 
     # check outline of arguments
     croak( q{random_multivariate_normal: Sizes of @mean and @covar don't match} )
-      if $p != int($p) || ref $_[$p - 1] eq 'ARRAY' ||
-          ref $_[$p] ne 'ARRAY';
+      if $p != int( $p )
+      || ref $_[ $p - 1 ] eq 'ARRAY'
+      || ref $_[$p] ne 'ARRAY';
 
     # linearize input - it seems faster to push
-    my @linear = splice(@_, 0, $p); # fill first $p slots w/ mean
+    my @linear = splice( @_, 0, $p );    # fill first $p slots w/ mean
 
     # expand array references
-    foreach my $ref (@_) { # for the rest of the input
+    foreach my $ref ( @_ ) {             # for the rest of the input
 
         # check length of row of @covariance
-        croak('random_multivariate_normal: @covar is not a $p x $p array ($p is size of @mean)'       )
-            unless @{$ref} == $p;
+        croak( 'random_multivariate_normal: @covar is not a $p x $p array ($p is size of @mean)' )
+          unless @{$ref} == $p;
 
         push @linear, @{$ref};
     }
 
     # load float working array with linearized input
-    putflt(@linear) or
-        croak 'random_multivariate_normal: unable to allocate memory';
+    putflt( @linear )
+      or croak 'random_multivariate_normal: unable to allocate memory';
 
     # initialize parameter array for multivariate normal generator
-    psetmn($p) or
-        croak 'random_multivariate_normal: unable to allocate memory';
+    psetmn( $p )
+      or croak 'random_multivariate_normal: unable to allocate memory';
 
-    unless (wantarray()) {
+    unless ( wantarray() ) {
         ### if called in a scalar context, returns single reference to obs
         pgenmn();
-        return [ getflt($p) ];
+        return [ getflt( $p ) ];
     }
 
     # otherwise return an $n by $p array of obs.
@@ -172,74 +173,74 @@ sub random_multivariate_normal { # Arguments: ($n, @mean, @covar(2-dimensional))
     } 1 .. $n;
 }
 
-sub random_multinomial { # Arguments: ($n,@p)
-    my($n, @p) = @_;
-    my $ncat = @p; # number of categories
-    $n = int($n);
+sub random_multinomial {    # Arguments: ($n,@p)
+    my ( $n, @p ) = @_;
+    my $ncat = @p;          # number of categories
+    $n = int( $n );
 
     croak "random_multinomial: $n = \$n < 0"
       if $n < 0;
 
-   croak "random_multinomial: $ncat = (length of \@p) < 2"
-        if $ncat < 2;
+    croak "random_multinomial: $ncat = (length of \@p) < 2"
+      if $ncat < 2;
 
-    rspriw($ncat)
+    rspriw( $ncat )
       or croak 'random_multinomial: Unable to allocate memory';
 
     pop @p;
-    rsprfw(scalar(@p))
+    rsprfw( scalar( @p ) )
       or croak 'random_multinomial: Unable to allocate memory';
 
-    my($i,$sum) = (0,0);
-    foreach my $val (@p) {
+    my ( $i, $sum ) = ( 0, 0 );
+    foreach my $val ( @p ) {
         croak "random_multinomial: $val = (some \$p[i]) < 0 or > 1"
-            if $val < 0 || $val > 1;
-        svprfw($i++,$val);
+          if $val < 0 || $val > 1;
+        svprfw( $i++, $val );
         $sum += $val;
     }
     croak 'random_multinomial: sum of \@p > 1'
       if $sum > 0.99999;
 
-    pgnmul($n, $ncat);
+    pgnmul( $n, $ncat );
     ### get the results
     $i = 0;
-    $_ = gvpriw($i++) for @p;
-    push @p, gvpriw($i);
+    $_ = gvpriw( $i++ ) for @p;
+    push @p, gvpriw( $i );
     return @p;
 }
 
-sub random_noncentral_chi_square { # Arguments: ($n,$df,$nonc)
+sub random_noncentral_chi_square {    # Arguments: ($n,$df,$nonc)
     croak 'Usage: random_noncentral_chi_square($n,$df,$nonc)'
-        if @_ < 3;
-    my($n, $df, $nonc) = @_;
-    croak("random_noncentral_chi_square: ($df = \$df < 1) or ($nonc = \$nonc) < 0" )
-        if $df < 1 || $nonc < 0;
+      if @_ < 3;
+    my ( $n, $df, $nonc ) = @_;
+    croak( "random_noncentral_chi_square: ($df = \$df < 1) or ($nonc = \$nonc) < 0" )
+      if $df < 1 || $nonc < 0;
 
     return unless wantarray
       ? map { gennch( $df, $nonc ) } 1 .. $n
       : gennch( $df, $nonc );
 }
 
-sub random_noncentral_f { # Arguments: ($n,$dfn,$dfd,$nonc)
+sub random_noncentral_f {    # Arguments: ($n,$dfn,$dfd,$nonc)
     croak 'Usage: random_noncentral_f($n,$dfn,$dfd,$nonc)'
-        if @_ < 4;
-    my($n, $dfn, $dfd, $nonc) = @_;
+      if @_ < 4;
+    my ( $n, $dfn, $dfd, $nonc ) = @_;
 
-    croak("random_noncentral_f: ($dfn = \$dfn < 1) or ($dfd = \$dfd <= 0) or ($nonc = \$nonc < 0)")
-        if $dfn < 1 || $dfd <= 0 || $nonc < 0;
+    croak( "random_noncentral_f: ($dfn = \$dfn < 1) or ($dfd = \$dfd <= 0) or ($nonc = \$nonc < 0)" )
+      if $dfn < 1 || $dfd <= 0 || $nonc < 0;
 
     return wantarray
       ? map { gennf( $dfn, $dfd, $nonc ) } 1 .. $n
       : gennf( $dfn, $dfd, $nonc );
 }
 
-sub random_normal { # Arguments: ($n,$av,$sd), defaults (1,0,1)
-    return wantarray() ? (gennor(0,1)) : gennor(0,1)
-        if @_ == 0; # default behavior if no arguments
-    my($n, $av, $sd) = @_;
+sub random_normal {    # Arguments: ($n,$av,$sd), defaults (1,0,1)
+    return wantarray() ? ( gennor( 0, 1 ) ) : gennor( 0, 1 )
+      if @_ == 0;      # default behavior if no arguments
+    my ( $n, $av, $sd ) = @_;
 
-    $av //= 0; # $av defaults to 0
-    $sd //= 1; # $sd defaults to 1, even if $av specified
+    $av //= 0;         # $av defaults to 0
+    $sd //= 1;         # $sd defaults to 1, even if $av specified
     croak "random_normal: $sd = \$sd < 0)"
       if $sd < 0;
 
@@ -248,45 +249,45 @@ sub random_normal { # Arguments: ($n,$av,$sd), defaults (1,0,1)
       : gennor( $av, $sd );
 }
 
-sub random_permutation { # Argument: (@array) - array to be permuted.
-    my $n = @_; # number of elements to be permuted
+sub random_permutation {    # Argument: (@array) - array to be permuted.
+    my $n = @_;             # number of elements to be permuted
     return () if $n == 0;
-    rspriw($n) or
-        croak 'random_permutation: unable to allocate memory';
+    rspriw( $n )
+      or croak 'random_permutation: unable to allocate memory';
 
-    pgnprm($n);
-    my @ans = map { gvpriw($_) } 0..$n-1;
+    pgnprm( $n );
+    my @ans = map { gvpriw( $_ ) } 0 .. $n - 1;
     return @_[@ans];
 }
 
-sub random_permuted_index { # Argument: $n = scalar(@array) (for permutation)
+sub random_permuted_index {    # Argument: $n = scalar(@array) (for permutation)
 
     croak 'Usage: random_permuted_index($n)'
       if @_ < 1;
 
-    my $n = int(shift(@_)); # number of elements to be permuted
+    my $n = int( shift( @_ ) );    # number of elements to be permuted
     croak "random_permuted_index: $n = \$n < 0"
       if $n < 0;
     return () if $n == 0;
-    rspriw($n) or
-        croak 'random_permuted_index: unable to allocate memory';
+    rspriw( $n )
+      or croak 'random_permuted_index: unable to allocate memory';
 
-    pgnprm($n);
-    return map { gvpriw($_) } 0..$n-1;
+    pgnprm( $n );
+    return map { gvpriw( $_ ) } 0 .. $n - 1;
 }
 
-sub random_uniform { # Arguments: ($n,$low,$high), defaults (1,0,1)
-    return wantarray() ? (genunf(0,1)) : genunf(0,1)
-        if @_ == 0;
+sub random_uniform {    # Arguments: ($n,$low,$high), defaults (1,0,1)
+    return wantarray() ? ( genunf( 0, 1 ) ) : genunf( 0, 1 )
+      if @_ == 0;
 
     croak 'Usage: random_uniform([$n,[$low,$high]])'
-        if @_ == 2; # only default is (0,1) for ($low,$high) both undef
+      if @_ == 2;       # only default is (0,1) for ($low,$high) both undef
 
-    my($n, $low, $high) = @_;
-    $low  //= 0; # default for $low is 0
-    $high //= 1; # default for $high is 1
+    my ( $n, $low, $high ) = @_;
+    $low  //= 0;        # default for $low is 0
+    $high //= 1;        # default for $high is 1
 
-    croak("random_uniform: $low = \$low > \$high = $high" )
+    croak( "random_uniform: $low = \$low > \$high = $high" )
       if $low > $high;
 
     return wantarray
@@ -294,10 +295,10 @@ sub random_uniform { # Arguments: ($n,$low,$high), defaults (1,0,1)
       : genunf( $low, $high );
 }
 
-sub random_poisson { # Arguments: ($n, $mu)
+sub random_poisson {    # Arguments: ($n, $mu)
     croak 'Usage: random_poisson($n,$mu)' if @_ < 2;
 
-    my($n, $mu) = @_;
+    my ( $n, $mu ) = @_;
     croak "random_poisson: $mu = \$mu < 0"
       if $mu < 0;
 
@@ -306,18 +307,18 @@ sub random_poisson { # Arguments: ($n, $mu)
       : ignpoi( $mu );
 }
 
-sub random_uniform_integer { # Arguments: ($n,$low,$high)
+sub random_uniform_integer {    # Arguments: ($n,$low,$high)
 
     croak 'Usage: random_uniform_integer($n,$low,$high)' if @_ < 3;
 
-    my($n, $low, $high) = @_;
-    $low = int($low);
-    $high = int($high);
-    croak("random_uniform_integer: $low = \$low > \$high = $high")
+    my ( $n, $low, $high ) = @_;
+    $low  = int( $low );
+    $high = int( $high );
+    croak( "random_uniform_integer: $low = \$low > \$high = $high" )
       if $low > $high;
     my $range = $high - $low;
 
-    croak("random_uniform_integer: $range = (\$high - \$low) > 2147483561")
+    croak( "random_uniform_integer: $range = (\$high - \$low) > 2147483561" )
       if $range > 2_147_483_561;
 
     return wantarray
@@ -325,28 +326,28 @@ sub random_uniform_integer { # Arguments: ($n,$low,$high)
       : $low + ignuin( 0, $range );
 }
 
-sub random_negative_binomial { # Arguments: ($n,$ne,$p)
+sub random_negative_binomial {    # Arguments: ($n,$ne,$p)
 
     croak 'Usage: random_negative_binomial($n,$ne,$p)'
       if @_ < 3;
 
-    my($n, $ne, $p) = @_;
-    $ne = int($ne);
-    croak("random_negative_binomial: ($ne = \$ne <= 0) or ($p = \$p <= 0 or >= 1)" )
-        if $ne <= 0 || $p <= 0 || $p >= 1;
+    my ( $n, $ne, $p ) = @_;
+    $ne = int( $ne );
+    croak( "random_negative_binomial: ($ne = \$ne <= 0) or ($p = \$p <= 0 or >= 1)" )
+      if $ne <= 0 || $p <= 0 || $p >= 1;
 
     return wantarray
       ? map { ignnbn( $ne, $p ) } 1 .. $n
       : ignnbn( $ne, $p );
 }
 
-sub random_binomial { # Arguments: ($n,$nt,$p)
+sub random_binomial {    # Arguments: ($n,$nt,$p)
     croak 'Usage: random_binomial($n,$nt,$p)'
       if @_ < 3;
 
-    my($n, $nt, $p) = @_;
-    $nt = int($nt);
-    croak("random_binomial: ($nt = \$nt < 0) or ($p = \$p < 0 or > 1)")
+    my ( $n, $nt, $p ) = @_;
+    $nt = int( $nt );
+    croak( "random_binomial: ($nt = \$nt < 0) or ($p = \$p < 0 or > 1)" )
       if $nt < 0 || $p < 0 || $p > 1;
 
     return wantarray
@@ -359,30 +360,29 @@ sub random_binomial { # Arguments: ($n,$nt,$p)
 #			SEED HANDLER FUNCTIONS                      #
 #####################################################################
 
-sub random_seed_from_phrase { # Argument $phrase
-    my $phrase = shift(@_);
+sub random_seed_from_phrase {    # Argument $phrase
+    my $phrase = shift( @_ );
     $phrase ||= q{};
-    return phrtsd($phrase);
+    return phrtsd( $phrase );
 }
 
-sub random_set_seed_from_phrase { # Argument $phrase
-    my $phrase = shift(@_);
+sub random_set_seed_from_phrase {    # Argument $phrase
+    my $phrase = shift( @_ );
     $phrase ||= q{};
-    salfph($phrase);
+    salfph( $phrase );
     return 1;
 }
 
-sub random_set_seed { # Argument @seed
-    my($seed1,$seed2) = @_;
-    croak('Usage: random_set_seed(\@seed)\n\@seed[0,1] must be two integers '.
-          "in the range (1,1) to (2147483562,2147483398)\nand usually comes ".
-          'from a call to random_get_seed() '.
-          "or\nrandom_seed_from_phrase(\$phrase).")
-      unless 
-           ( $seed1 == int( $seed1 ) && $seed1 > 0 && $seed1 < 2_147_483_563  )
-        && ( $seed2 == int( $seed2 ) && $seed2 > 0 && $seed2 < 2_147_483_399  );
+sub random_set_seed {    # Argument @seed
+    my ( $seed1, $seed2 ) = @_;
+    croak(  'Usage: random_set_seed(\@seed)\n\@seed[0,1] must be two integers '
+          . "in the range (1,1) to (2147483562,2147483398)\nand usually comes "
+          . 'from a call to random_get_seed() '
+          . "or\nrandom_seed_from_phrase(\$phrase)." )
+      unless ( $seed1 == int( $seed1 ) && $seed1 > 0 && $seed1 < 2_147_483_563 )
+      && ( $seed2 == int( $seed2 ) && $seed2 > 0 && $seed2 < 2_147_483_399 );
 
-    setall($seed1,$seed2);
+    setall( $seed1, $seed2 );
     return 1;
 }
 
@@ -394,12 +394,12 @@ sub random_set_seed { # Argument @seed
 
 sub getflt {
     my $n = shift;
-    return map { gvprfw($_) } 0..$n-1;
+    return map { gvprfw( $_ ) } 0 .. $n - 1;
 }
 
 sub putflt {
     my $n = @_;
-    rsprfw($n)
+    rsprfw( $n )
       or return 0;
     my $i = 0;
     svprfw( $i++, $_ ) for @_;

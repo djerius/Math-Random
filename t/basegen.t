@@ -50,7 +50,7 @@ subtest 'antithetic' => sub {
     my $u1_anti = random_uniform();
     random_set_antithetic( 0 );    # Turn off
 
-    is( $u1_anti, float(1 - $u1) );
+    is( $u1_anti, float( 1 - $u1 ) );
 
 };
 
