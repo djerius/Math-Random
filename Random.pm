@@ -9,7 +9,7 @@ require DynaLoader;
 require AutoLoader;
 
 @ISA = qw(Exporter DynaLoader);
-$VERSION = '0.72';
+$VERSION = '0.73';
 
 @EXPORT = qw(random_normal 
 	     random_permutation 
