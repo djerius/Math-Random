@@ -216,7 +216,7 @@ sub random_noncentral_chi_square {    # Arguments: ($n,$df,$nonc)
     croak( "random_noncentral_chi_square: ($df = \$df < 1) or ($nonc = \$nonc) < 0" )
       if $df < 1 || $nonc < 0;
 
-    return unless wantarray
+    return wantarray
       ? map { gennch( $df, $nonc ) } 1 .. $n
       : gennch( $df, $nonc );
 }
