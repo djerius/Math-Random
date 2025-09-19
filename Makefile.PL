@@ -22,6 +22,7 @@ WriteMakefile(
     },
 
     META_ADD => {
+        "meta-spec" => { version => 2 },
         resources => {
             repository => {
                 type => 'git',
