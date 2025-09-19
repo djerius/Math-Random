@@ -10,8 +10,8 @@ $def = '-DPHRTSD_ORIG'
 
 WriteMakefile(
     NAME         => 'Math::Random',
-    VERSION      => '0.73-TRIAL',
-    XS_VERSION   => '0.73',
+    VERSION      => '0.74-TRIAL',
+    XS_VERSION   => '0.74',
     # VERSION_FROM => 'Random.pm',
     OBJECT       => '$(O_FILES)',
     LIBS         => ['-lm'],

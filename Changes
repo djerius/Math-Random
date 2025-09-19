@@ -1,5 +1,15 @@
 Revision history for Perl extension Math::Random.
 
+0.74-TRIAL 2025-09-19T11:19:50-0400
+
+  [BUG FIX]
+    - 0.73-TRIAL broke random_noncentral_chi_square
+
+  [TESTS]
+
+    - added tests for calling in scalar context
+    - added missing tests for some routines
+
 0.73-TRIAL 2025-08-09T12:08:00Z
 
   [INCOMPATIBILITIES]
