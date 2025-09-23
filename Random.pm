@@ -1060,10 +1060,15 @@ Kathy Russell, and John Venier.
 
 =item *
 
-Correspondence   regarding   B<Math::Random> or   B<randlib> should be
-addressed to John Venier by email to
+Correspondence regarding B<randlib> should be addressed to John Venier
+by email to
 
                       jvenier@mdanderson.org
+
+Issues with B<Math::Random> should be filed at the CPAN bugtracker at
+
+  https://rt.cpan.org/Public/Dist/Display.html?Name=Math-Random
+
 
 =item *
 
