@@ -8,7 +8,7 @@ use Carp;
 
 use parent qw( Exporter DynaLoader);
 
-our $VERSION = '0.74';
+our $VERSION = '0.75';
 
 ## no critic ( Wantarray DollarAB ComplexMappings )
 
@@ -1040,7 +1040,7 @@ Variate Generation.  New York: Springer-Verlag, 1986.
 
 =head1 VERSION
 
-This POD documents B<Math::Random> version 0.71.
+This POD documents B<Math::Random> version 0.75.
 
 =head1 AUTHORS
 
