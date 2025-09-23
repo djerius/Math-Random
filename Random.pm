@@ -836,15 +836,15 @@ Sets the seeds of the current random number generator based on C<$type>:
 
 =over
 
-=item  -1
+=item  Z<>-1
 
 initial value
 
-=item   0
+=item  Z<> 0
 
 first value of the current block
 
-=item   1
+=item  Z<> 1
 
 first value of the next block
 
