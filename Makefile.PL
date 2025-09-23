@@ -18,7 +18,7 @@ WriteMakefile(
     DEFINE       => $def,
     MIN_PERL_VERSION => '5.10.0',
     TEST_REQUIRES => {
-        'Test2::V0' => 0,
+        'Test2::V0' => '1.302200',  # a somewhat recent version will do
     },
 
     META_ADD => {
